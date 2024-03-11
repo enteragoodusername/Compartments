@@ -1,0 +1,7 @@
+.compartment {
+    border-style: solid
+}
+.compartment h2{
+    margin-top: .25rem;
+    margin-left: .25rem;
+}
