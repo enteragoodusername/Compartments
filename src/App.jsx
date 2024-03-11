@@ -98,12 +98,11 @@ const App  = () => {
   let i =0;
 
   return (<>
-  <CompartmentForm compFormText={compFormText} setCompText={setCompText} comparts={comparts} setComparts={setComparts}/>
-  <br/>
   <TaskForm text={formtext} setFormText={setFormText} comparts={comparts} setComparts={setComparts}/>
   <br/>
   {comparts.map((compart) => <Compartment comparts={comparts} key={++i} compart={compart} setComparts={setComparts}/>)}
-
+  <br/>
+  <CompartmentForm compFormText={compFormText} setCompText={setCompText} comparts={comparts} setComparts={setComparts}/>
   </>)
 }
 

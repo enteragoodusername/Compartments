@@ -1,7 +1,14 @@
+body {
+
+    font-family: Arial, Helvetica, sans-serif;
+    
+}
 .compartment {
-    border-style: solid
+    border-radius: .5rem;
+    border-style: solid;
+    margin-bottom: 1rem;
 }
 .compartment h2{
     margin-top: .25rem;
-    margin-left: .25rem;
+    margin-left: .4rem;
 }
