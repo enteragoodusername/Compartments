@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import "./styles.css"
-const Task = ({compart,task, setComparts, comparts}) =>{
+const Task = ({task, setComparts, comparts}) =>{
+  const [showDesc,setShowDesc] = useState(false);
   const onChange = () => {
-    const compartIndex = comparts.findIndex((compartment) => compartment.id === compart.id );
+    const compartIndex = comparts.findIndex((compartment) => compartment.id === task.compartID );
     const newComparts = [...comparts]
     let newCompart = newComparts[compartIndex];
     let newTasks = [...newCompart.tasks]
@@ -17,22 +18,38 @@ const Task = ({compart,task, setComparts, comparts}) =>{
 
     console.log(comparts[compartIndex].name)
   }
-  return (<>
-  <p>{task.name} <input onChange={onChange} type='checkbox' checked={task.finished}/></p>
-  </>)
+  return (<div className='task'>
+  <h3 className='taskName'>
+  { task.desc != "" ? <input onClick={() => setShowDesc(!showDesc)} type='button' value={showDesc? "-" : "+"} /> : <></>}
+   {" "+task.name}
+   <input onChange={onChange} type='checkbox' checked={task.finished}/>
+  </h3>
+  <div className='wrapper' style={{gridTemplateRows: showDesc ? "1fr":"0fr"}}>
+  { task.desc != "" ?  <div className='taskDesc'>{task.desc}</div> : <></>}
+  </div>
+  </div>)
 }
 const Compartment = ({compart, setComparts, comparts}) => {
-  console.log(compart.name);
+  const [showTasks, setShowTasks] = useState(true);
   return (
     <div className="compartment">
-    <h2>{compart.name}</h2>
-    <ul>
-    {compart.tasks.map((task) =><li key={task.id}> <Task comparts={comparts} compart={compart} task={task} setComparts={setComparts}/></li>)}
-    </ul>
+    
+    <h2>
+      {compart.name + " "}
+      { compart.tasks.length > 0? <input onClick={() => setShowTasks(!showTasks)} type='button' value={showTasks? "-" : "+"} /> : <></>}
+      </h2>
+    <div className='wrapper' style={{gridTemplateRows: showTasks ? "1fr":"0fr"}}>
+      <ul className='taskList'>
+      {compart.tasks.map((task) =><li key={task.id}> <Task comparts={comparts} task={task} setComparts={setComparts}/></li>)}
+      </ul>
+    </div>
+
     </div>
   );
 }
-const CompartmentForm = ({compFormText,setCompText, comparts, setComparts}) =>{
+const CompartmentForm = ({comparts, setComparts}) =>{
+
+  const [compFormText, setCompText] = useState("");
   const addComparts = (event) =>{
     event.preventDefault();
     let compart = {
@@ -51,15 +68,19 @@ const CompartmentForm = ({compFormText,setCompText, comparts, setComparts}) =>{
     </form>
   );
 }
-const TaskForm = ({text, setFormText, comparts, setComparts}) => {
+const TaskForm = ({ comparts, setComparts}) => {
+  const [newName, setFormName] = useState("");
+  const [newDesc, setFormDesc] = useState("");
   const [selectedCompart, setSelectedCompart] = useState(1)
   const addTasks = (event) =>{
     let compartIndex = comparts.findIndex((compart) =>compart.id == selectedCompart);
     console.log(selectedCompart);
     let task = {
-      name: text,
+      name: newName,
+      desc: newDesc,
       id: comparts[compartIndex].tasks.length +1,
-      finished: false
+      finished: false,
+      compartID: comparts[compartIndex].id
     }
     event.preventDefault();
     
@@ -69,28 +90,31 @@ const TaskForm = ({text, setFormText, comparts, setComparts}) => {
     }
     let newComparts = [...comparts];
     newComparts[compartIndex] = newCompart;
-    setFormText("");
+    setFormName("");
+    setFormDesc("");
     setComparts(newComparts);
-    console.log(newComparts);
+    
   }
   return (
     <form onSubmit={addTasks}>
-      <label>Add Task: </label>
+      <label>Add Task Name: </label>
+      <input value={newName} onChange={(event) => setFormName(event.target.value)} />
       <br/>
-      <textarea value={text} onChange={(event) => setFormText(event.target.value)} />
+      <label>Add Task Description (Optional)</label>
+      <br/>
+      <textarea value={newDesc} onChange={(event) => setFormDesc(event.target.value)}/>
       <br/>
       <label>Choose Compartment to insert into:</label>
       <select onChange={(selected) => setSelectedCompart(selected.target.value)}>
         {comparts.map((compart) => <option key={Math.random() * 100000} value={compart.id}>{compart.name}</option>)}
       </select>
       <br/>
-      <input type='submit' value="Submit"/>
+      <input type='submit' value="Add Task"/>
     </form>
   )
 }
 const App  = () => {
   const [compFormText, setCompText] = useState("");
-  const [formtext, setFormText] = useState("");
 
   const [comparts, setComparts] = useState([{name: "None", tasks:[], id:1}]);
 
@@ -98,12 +122,11 @@ const App  = () => {
   let i =0;
 
   return (<>
-  <CompartmentForm compFormText={compFormText} setCompText={setCompText} comparts={comparts} setComparts={setComparts}/>
-  <br/>
-  <TaskForm text={formtext} setFormText={setFormText} comparts={comparts} setComparts={setComparts}/>
+  <TaskForm comparts={comparts} setComparts={setComparts}/>
   <br/>
   {comparts.map((compart) => <Compartment comparts={comparts} key={++i} compart={compart} setComparts={setComparts}/>)}
-
+  <br/>
+  <CompartmentForm compFormText={compFormText} setCompText={setCompText} comparts={comparts} setComparts={setComparts}/>
   </>)
 }
 
