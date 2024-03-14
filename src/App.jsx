@@ -1,5 +1,12 @@
 import { useState } from 'react'
 import "./styles.css"
+const Header = () =>{
+  return (
+    <div className='header'>
+      Compartments
+    </div>
+  );
+}
 const Task = ({task, setComparts, comparts}) =>{
   const [showDesc,setShowDesc] = useState(false);
   const onChange = () => {
@@ -19,29 +26,33 @@ const Task = ({task, setComparts, comparts}) =>{
     console.log(comparts[compartIndex].name)
   }
   return (<div className='task'>
-  <h3 className='taskName'>
-  { task.desc != "" ? <input onClick={() => setShowDesc(!showDesc)} type='button' value={showDesc? "-" : "+"} /> : <></>}
-   {" "+task.name}
-   <input onChange={onChange} type='checkbox' checked={task.finished}/>
-  </h3>
-  <div className='wrapper' style={{gridTemplateRows: showDesc ? "1fr":"0fr"}}>
-  { task.desc != "" ?  <div className='taskDesc'>{task.desc}</div> : <></>}
+  
+  
+  <input onChange={onChange} type='checkbox' checked={task.finished}/>
+    <div className='taskInfo'>
+      <div>
+        {" "+task.name +" "}
+        { task.desc != "" ? <input onClick={() => setShowDesc(!showDesc)} type='button' value={showDesc? "-" : "+"} /> : <></>}
+      </div>
+      <div className='wrapper' style={{gridTemplateRows: showDesc ? "1fr":"0fr"}}>
+        { task.desc != "" ?  <div className='taskDesc'>{task.desc}</div> : <></>}
+      </div>
   </div>
   </div>)
 }
 const Compartment = ({compart, setComparts, comparts}) => {
   const [showTasks, setShowTasks] = useState(true);
   return (
-    <div className="compartment">
+    <div className="module compartment">
     
     <h2>
       {compart.name + " "}
       { compart.tasks.length > 0? <input onClick={() => setShowTasks(!showTasks)} type='button' value={showTasks? "-" : "+"} /> : <></>}
       </h2>
     <div className='wrapper' style={{gridTemplateRows: showTasks ? "1fr":"0fr"}}>
-      <ul className='taskList'>
-      {compart.tasks.map((task) =><li key={task.id}> <Task comparts={comparts} task={task} setComparts={setComparts}/></li>)}
-      </ul>
+      <div className='taskList'>
+      {compart.tasks.map((task) =><Task comparts={comparts} task={task} setComparts={setComparts}/>)}
+      </div>
     </div>
 
     </div>
@@ -61,9 +72,9 @@ const CompartmentForm = ({comparts, setComparts}) =>{
     setCompText("");
   }
   return (
-    <form onSubmit={addComparts}>
+    <form className='module compartForm' onSubmit={addComparts}>
       <label>Add compartment: </label>
-      <input value={compFormText} onChange={(event) => setCompText(event.target.value)} />
+      <input className='input' value={compFormText} onChange={(event) => setCompText(event.target.value)} />
       <input type='submit' value="Submit"/>
     </form>
   );
@@ -96,13 +107,13 @@ const TaskForm = ({ comparts, setComparts}) => {
     
   }
   return (
-    <form onSubmit={addTasks}>
+    <form className='module taskForm' onSubmit={addTasks}>
       <label>Add Task Name: </label>
-      <input value={newName} onChange={(event) => setFormName(event.target.value)} />
+      <input className='input' value={newName} onChange={(event) => setFormName(event.target.value)} />
       <br/>
       <label>Add Task Description (Optional)</label>
       <br/>
-      <textarea value={newDesc} onChange={(event) => setFormDesc(event.target.value)}/>
+      <textarea className='input descForm' value={newDesc} onChange={(event) => setFormDesc(event.target.value)}/>
       <br/>
       <label>Choose Compartment to insert into:</label>
       <select onChange={(selected) => setSelectedCompart(selected.target.value)}>
@@ -122,11 +133,12 @@ const App  = () => {
   let i =0;
 
   return (<>
-  <TaskForm comparts={comparts} setComparts={setComparts}/>
-  <br/>
-  {comparts.map((compart) => <Compartment comparts={comparts} key={++i} compart={compart} setComparts={setComparts}/>)}
-  <br/>
-  <CompartmentForm compFormText={compFormText} setCompText={setCompText} comparts={comparts} setComparts={setComparts}/>
+  <Header/>
+  <div className='content'>
+    <TaskForm comparts={comparts} setComparts={setComparts}/>
+    {comparts.map((compart) => <Compartment comparts={comparts} key={++i} compart={compart} setComparts={setComparts}/>)}
+    <CompartmentForm compFormText={compFormText} setCompText={setCompText} comparts={comparts} setComparts={setComparts}/>
+  </div>
   </>)
 }
 
