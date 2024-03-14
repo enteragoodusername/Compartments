@@ -1,5 +1,12 @@
 import { useState } from 'react'
 import "./styles.css"
+const Header = () =>{
+  return (
+    <div className='header'>
+      Compartments
+    </div>
+  );
+}
 const Task = ({task, setComparts, comparts}) =>{
   const [showDesc,setShowDesc] = useState(false);
   const onChange = () => {
@@ -36,7 +43,7 @@ const Task = ({task, setComparts, comparts}) =>{
 const Compartment = ({compart, setComparts, comparts}) => {
   const [showTasks, setShowTasks] = useState(true);
   return (
-    <div className="compartment">
+    <div className="module compartment">
     
     <h2>
       {compart.name + " "}
@@ -65,7 +72,7 @@ const CompartmentForm = ({comparts, setComparts}) =>{
     setCompText("");
   }
   return (
-    <form onSubmit={addComparts}>
+    <form className='module compartForm' onSubmit={addComparts}>
       <label>Add compartment: </label>
       <input className='input' value={compFormText} onChange={(event) => setCompText(event.target.value)} />
       <input type='submit' value="Submit"/>
@@ -100,7 +107,7 @@ const TaskForm = ({ comparts, setComparts}) => {
     
   }
   return (
-    <form onSubmit={addTasks}>
+    <form className='module taskForm' onSubmit={addTasks}>
       <label>Add Task Name: </label>
       <input className='input' value={newName} onChange={(event) => setFormName(event.target.value)} />
       <br/>
@@ -126,11 +133,12 @@ const App  = () => {
   let i =0;
 
   return (<>
-  <TaskForm comparts={comparts} setComparts={setComparts}/>
-  <br/>
-  {comparts.map((compart) => <Compartment comparts={comparts} key={++i} compart={compart} setComparts={setComparts}/>)}
-  <br/>
-  <CompartmentForm compFormText={compFormText} setCompText={setCompText} comparts={comparts} setComparts={setComparts}/>
+  <Header/>
+  <div className='content'>
+    <TaskForm comparts={comparts} setComparts={setComparts}/>
+    {comparts.map((compart) => <Compartment comparts={comparts} key={++i} compart={compart} setComparts={setComparts}/>)}
+    <CompartmentForm compFormText={compFormText} setCompText={setCompText} comparts={comparts} setComparts={setComparts}/>
+  </div>
   </>)
 }
 
