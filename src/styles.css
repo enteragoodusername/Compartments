@@ -18,6 +18,7 @@ body {
 }
 .task {
     margin-top: 1rem;
+    margin-left: .5rem;
     margin-bottom: 1rem;
 }
 .wrapper {
@@ -31,4 +32,15 @@ body {
 .taskList {
     overflow: hidden;
     margin: 0rem 0rem 0rem 0rem;
+}
+.descForm {
+    width: 100%;
+}
+.input:focus{
+    outline: none;
+}
+.taskInfo{
+    margin-left: .25rem;
+    display: inline-flex;
+    flex-direction: column;
 }

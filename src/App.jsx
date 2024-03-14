@@ -19,13 +19,17 @@ const Task = ({task, setComparts, comparts}) =>{
     console.log(comparts[compartIndex].name)
   }
   return (<div className='task'>
-  <h3 className='taskName'>
-  { task.desc != "" ? <input onClick={() => setShowDesc(!showDesc)} type='button' value={showDesc? "-" : "+"} /> : <></>}
-   {" "+task.name}
-   <input onChange={onChange} type='checkbox' checked={task.finished}/>
-  </h3>
-  <div className='wrapper' style={{gridTemplateRows: showDesc ? "1fr":"0fr"}}>
-  { task.desc != "" ?  <div className='taskDesc'>{task.desc}</div> : <></>}
+  
+  
+  <input onChange={onChange} type='checkbox' checked={task.finished}/>
+    <div className='taskInfo'>
+      <div>
+        {" "+task.name +" "}
+        { task.desc != "" ? <input onClick={() => setShowDesc(!showDesc)} type='button' value={showDesc? "-" : "+"} /> : <></>}
+      </div>
+      <div className='wrapper' style={{gridTemplateRows: showDesc ? "1fr":"0fr"}}>
+        { task.desc != "" ?  <div className='taskDesc'>{task.desc}</div> : <></>}
+      </div>
   </div>
   </div>)
 }
@@ -39,9 +43,9 @@ const Compartment = ({compart, setComparts, comparts}) => {
       { compart.tasks.length > 0? <input onClick={() => setShowTasks(!showTasks)} type='button' value={showTasks? "-" : "+"} /> : <></>}
       </h2>
     <div className='wrapper' style={{gridTemplateRows: showTasks ? "1fr":"0fr"}}>
-      <ul className='taskList'>
-      {compart.tasks.map((task) =><li key={task.id}> <Task comparts={comparts} task={task} setComparts={setComparts}/></li>)}
-      </ul>
+      <div className='taskList'>
+      {compart.tasks.map((task) =><Task comparts={comparts} task={task} setComparts={setComparts}/>)}
+      </div>
     </div>
 
     </div>
@@ -63,7 +67,7 @@ const CompartmentForm = ({comparts, setComparts}) =>{
   return (
     <form onSubmit={addComparts}>
       <label>Add compartment: </label>
-      <input value={compFormText} onChange={(event) => setCompText(event.target.value)} />
+      <input className='input' value={compFormText} onChange={(event) => setCompText(event.target.value)} />
       <input type='submit' value="Submit"/>
     </form>
   );
@@ -98,11 +102,11 @@ const TaskForm = ({ comparts, setComparts}) => {
   return (
     <form onSubmit={addTasks}>
       <label>Add Task Name: </label>
-      <input value={newName} onChange={(event) => setFormName(event.target.value)} />
+      <input className='input' value={newName} onChange={(event) => setFormName(event.target.value)} />
       <br/>
       <label>Add Task Description (Optional)</label>
       <br/>
-      <textarea value={newDesc} onChange={(event) => setFormDesc(event.target.value)}/>
+      <textarea className='input descForm' value={newDesc} onChange={(event) => setFormDesc(event.target.value)}/>
       <br/>
       <label>Choose Compartment to insert into:</label>
       <select onChange={(selected) => setSelectedCompart(selected.target.value)}>
