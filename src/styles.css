@@ -8,6 +8,7 @@ body {
 @font-face {
     font-family: "myFirstFont";
     src: url("./FontsFree-Net-Gilroy-ExtraBold.ttf");
+    font-style: normal;
 }
 .header {
     font-size: large;

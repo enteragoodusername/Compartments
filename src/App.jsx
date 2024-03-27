@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import "./styles.css"
 const Header = () =>{
   return (
@@ -6,6 +6,12 @@ const Header = () =>{
       Compartments
     </div>
   );
+}
+const NotifMessage = ({message,setMessage}) => {
+  return (
+  <div className='notifMessage'>
+    {message}
+  </div>)
 }
 const Task = ({task, setComparts, comparts}) =>{
   const [showDesc,setShowDesc] = useState(false);
@@ -125,20 +131,21 @@ const TaskForm = ({ comparts, setComparts}) => {
   )
 }
 const App  = () => {
-  const [compFormText, setCompText] = useState("");
-
-  const [comparts, setComparts] = useState([{name: "None", tasks:[], id:1}]);
+  const [comparts, setComparts] = useState([{name: "General", tasks:[], id:1}]);
+  const [message, setMessage] = useState("")
 
 
   let i =0;
 
   return (<>
+
   <Header/>
   <div className='content'>
     <TaskForm comparts={comparts} setComparts={setComparts}/>
     {comparts.map((compart) => <Compartment comparts={comparts} key={++i} compart={compart} setComparts={setComparts}/>)}
-    <CompartmentForm compFormText={compFormText} setCompText={setCompText} comparts={comparts} setComparts={setComparts}/>
+    <CompartmentForm comparts={comparts} setComparts={setComparts}/>
   </div>
+  <NotifMessage message={message} setMessage={setMessage}/>
   </>)
 }
 
