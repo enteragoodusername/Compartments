@@ -15,8 +15,7 @@ body {
     padding-left: 1rem;
     padding-top: .5rem;
     padding-bottom: .5rem;
-    border-bottom: .1rem solid black;
-    margin: 0rem 0rem 1rem 0rem;
+    margin: 0rem 0rem .5rem 0rem;
     font-family: "myFirstFont" ;
 }
 .content{
@@ -74,7 +73,26 @@ body {
     border-radius: .5rem;
 }
 .module {
-    margin-top: 1rem;
+    margin-top: .5rem;
     margin-bottom: 1rem;
     padding: 1rem 1rem 1rem 1rem;
 }
+.notifMessage{
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    vertical-align: middle;
+    font-size: large;
+    top: 0px;
+    width: 100%;
+    position: fixed;
+    background-color: lightcoral;
+    display: flex;
+  }
+  .notifMessage p {
+    margin: 0rem 0rem 0rem 0rem;
+  }
+  .notifMessage input {
+    margin-left: auto;
+  }
