@@ -1,5 +1,8 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, createContext } from 'react'
 import "./styles.css"
+
+export const MessageContext = createContext(()=> {});
+
 const Header = () =>{
   return (
     <div className='header'>
@@ -8,12 +11,19 @@ const Header = () =>{
   );
 }
 const NotifMessage = ({message,setMessage}) => {
-  return (
-  <div className='notifMessage'>
-    {message}
-  </div>)
+  const pressedButton = () =>{
+    setMessage("");
+  }
+  if (message != ""){
+    return (
+    <div className='notifMessage'>
+      <p>{message}</p>
+      <input type='button' value='x' onClick={ pressedButton}/>
+    </div>)
+  }
 }
 const Task = ({task, setComparts, comparts}) =>{
+  
   const [showDesc,setShowDesc] = useState(false);
   const onChange = () => {
     const compartIndex = comparts.findIndex((compartment) => compartment.id === task.compartID );
@@ -65,10 +75,14 @@ const Compartment = ({compart, setComparts, comparts}) => {
   );
 }
 const CompartmentForm = ({comparts, setComparts}) =>{
-
+  const setMessage = useContext(MessageContext)
   const [compFormText, setCompText] = useState("");
   const addComparts = (event) =>{
     event.preventDefault();
+    if (compFormText == ""){
+      setMessage("Error: Compartments need to include a name");
+      return
+  }
     let compart = {
       name: compFormText,
       tasks: [],
@@ -86,12 +100,21 @@ const CompartmentForm = ({comparts, setComparts}) =>{
   );
 }
 const TaskForm = ({ comparts, setComparts}) => {
+  const setMessage = useContext(MessageContext)
+  
   const [newName, setFormName] = useState("");
   const [newDesc, setFormDesc] = useState("");
   const [selectedCompart, setSelectedCompart] = useState(1)
+
   const addTasks = (event) =>{
+    event.preventDefault();
+
     let compartIndex = comparts.findIndex((compart) =>compart.id == selectedCompart);
     console.log(selectedCompart);
+    if (newName == ""){
+        setMessage("Error: Tasks need to include a name");
+        return
+    }
     let task = {
       name: newName,
       desc: newDesc,
@@ -99,7 +122,6 @@ const TaskForm = ({ comparts, setComparts}) => {
       finished: false,
       compartID: comparts[compartIndex].id
     }
-    event.preventDefault();
     
     let newCompart = {
       ...comparts[compartIndex],
@@ -140,12 +162,14 @@ const App  = () => {
   return (<>
 
   <Header/>
+  <MessageContext.Provider value={setMessage}>
   <div className='content'>
     <TaskForm comparts={comparts} setComparts={setComparts}/>
     {comparts.map((compart) => <Compartment comparts={comparts} key={++i} compart={compart} setComparts={setComparts}/>)}
     <CompartmentForm comparts={comparts} setComparts={setComparts}/>
   </div>
   <NotifMessage message={message} setMessage={setMessage}/>
+  </MessageContext.Provider>
   </>)
 }
 
