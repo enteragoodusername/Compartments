@@ -96,3 +96,15 @@ body {
   .notifMessage input {
     margin-left: auto;
   }
+
+
+  .compartForm .p-colorpicker, .p-colorpicker-preview{
+    margin: 0px 1px 0px 1px;
+    width: 21px;
+    height: 21px;
+  }
+
+  .colorForm{
+    margin-left: 4px;
+    width: 4rem;
+  }

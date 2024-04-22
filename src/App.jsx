@@ -1,8 +1,35 @@
 import { useState, useContext, createContext } from 'react'
 import "./styles.css"
+import Timeline from './Timeline/Timeline'
+import { ColorPicker } from 'primereact/colorpicker';
 
 export const MessageContext = createContext(()=> {});
-
+const tasks = [
+  {
+    id: "Task 1",
+    name: "Redesign website",
+    start: "2016-12-28",
+    end: "2016-12-31",
+    progress: 10,
+    dependencies: "",
+  },
+  {
+    id: "Task 2",
+    name: "Redesign website",
+    start: "2016-12-28",
+    end: "2016-12-31",
+    progress: 20,
+    dependencies: "Task 1",
+  },
+  {
+    id: "Task 3",
+    name: "Redesign website",
+    start: "2016-12-28",
+    end: "2016-12-31",
+    progress: 0,
+    dependencies: "Task 2, Task 1",
+  },
+]
 const Header = () =>{
   return (
     <div className='header'>
@@ -10,6 +37,7 @@ const Header = () =>{
     </div>
   );
 }
+
 const NotifMessage = ({message,setMessage}) => {
   const pressedButton = () =>{
     setMessage("");
@@ -59,7 +87,7 @@ const Task = ({task, setComparts, comparts}) =>{
 const Compartment = ({compart, setComparts, comparts}) => {
   const [showTasks, setShowTasks] = useState(true);
   return (
-    <div className="module compartment">
+    <div className="module compartment" style={{backgroundColor: compart.color}}>
     
     <h2>
       {compart.name + " "}
@@ -77,24 +105,30 @@ const Compartment = ({compart, setComparts, comparts}) => {
 const CompartmentForm = ({comparts, setComparts}) =>{
   const setMessage = useContext(MessageContext)
   const [compFormText, setCompText] = useState("");
+  const [color, setColor] = useState("ffffff")
+
   const addComparts = (event) =>{
     event.preventDefault();
     if (compFormText == ""){
       setMessage("Error: Compartments need to include a name");
       return
-  }
+    }
     let compart = {
       name: compFormText,
+      color: `#${color}`,
       tasks: [],
       id: comparts.length + 1
     }
     setComparts(comparts.concat(compart));
     setCompText("");
   }
+  const regex = /[^1-9a-fA-F]+/g;
   return (
     <form className='module compartForm' onSubmit={addComparts}>
       <label>Add compartment: </label>
       <input className='input' value={compFormText} onChange={(event) => setCompText(event.target.value)} />
+      <ColorPicker format='hex' value={color} onChange={(e) => setColor(e.value)}/>
+      <input className='colorForm' value={`#${color}`} onChange={(event) => setColor(event.target.value.replace(regex,'').substring(0,6))}/>
       <input type='submit' value="Submit"/>
     </form>
   );
@@ -152,6 +186,7 @@ const TaskForm = ({ comparts, setComparts}) => {
     </form>
   )
 }
+
 const App  = () => {
   const [comparts, setComparts] = useState([{name: "General", tasks:[], id:1}]);
   const [message, setMessage] = useState("")
@@ -165,8 +200,9 @@ const App  = () => {
   <MessageContext.Provider value={setMessage}>
   <div className='content'>
     <TaskForm comparts={comparts} setComparts={setComparts}/>
-    {comparts.map((compart) => <Compartment comparts={comparts} key={++i} compart={compart} setComparts={setComparts}/>)}
+    {comparts.map((compart) => <Compartment comparts={comparts} key={i++} compart={compart} setComparts={setComparts}/>)}
     <CompartmentForm comparts={comparts} setComparts={setComparts}/>
+    <Timeline comparts={comparts}/>
   </div>
   <NotifMessage message={message} setMessage={setMessage}/>
   </MessageContext.Provider>
