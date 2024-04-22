@@ -1,0 +1,53 @@
+.Timeline{
+
+    display: grid;
+    overflow-x: scroll;
+    grid-auto-flow: row dense;
+    grid-auto-rows: minmax(160px,1fr);  
+    grid-template-columns: min-content;
+    width: 100% !important;
+   
+    
+  }
+  .hourBox {
+    grid-column: 1;
+    justify-self: end;
+  }
+  .contentBox{
+    display: flex;
+    flex-direction: column;
+    border-color: black;
+    grid-column: 2;
+    border: solid .25rem;
+    border-bottom: none;
+    width: 10rem;
+  }
+  .contentBox:last-of-type{
+    border-bottom: solid .25rem;
+  }
+
+  .quarter{
+    height: 25%;
+    border-bottom: dashed ;
+  }
+  .quarter:last-of-type{
+    border-bottom: none;
+  }
+  .selectFlex{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .selection{
+    margin: .5rem .5rem .5rem .5rem;
+    width: 208px;
+    height: 2.5rem;
+    border-style: solid;
+    border-radius: .5rem;
+    font-weight: bold;
+    text-align: center;
+  }
+  .selection:hover{
+    border-color: rgb(169, 169, 169);
+    cursor: pointer;
+  }
