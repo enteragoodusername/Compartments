@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import './Signup.css';
-import { Header, TaskForm, CompartmentForm, Compartment } from './Compartments';
-
+import HeaderForm from "./Header";
+import TaskForm from "./TaskForm";
+import CompartmentForm from "./CompartmentForm";
 
 function Homepage() {
     const [compFormText, setCompText] = useState("");
@@ -15,7 +16,7 @@ function Homepage() {
     return (
         <div className="flex justify-center m-3 p-3">
             <div className="bg-slate-200 m-3 p-3 font-sans max-w-xl">
-                <Header/>
+                <HeaderForm/>
                 <div className='content'>
                     <TaskForm comparts={comparts} setComparts={setComparts}/>
                     {comparts.map((compart) => <Compartment comparts={comparts} key={++i} compart={compart} setComparts={setComparts}/>)}

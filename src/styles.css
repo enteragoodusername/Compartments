@@ -10,14 +10,7 @@ body {
     src: url("assets/FontsFree-Net-Gilroy-ExtraBold.ttf");
     font-style: normal;
 }
-.header {
-    font-size: large;
-    padding-left: 1rem;
-    padding-top: .5rem;
-    padding-bottom: .5rem;
-    margin: 0rem 0rem .5rem 0rem;
-    font-family: "myFirstFont" ;
-}
+
 .content{
     margin-left: 2rem;
     margin-right: 2rem;
