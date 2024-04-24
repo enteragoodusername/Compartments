@@ -62,6 +62,22 @@ app.get("/api/comparts", (req,res) => {
   }
 })
 
+app.post("/api/comparts", (req,res) => {
+  console.log(req.body)
+
+  if (req.session.userID){
+    UserModel.findByIdAndUpdate(req.session.userID,req.body,{new:true})
+    .then(result => {
+      res.json(result.comparts)}
+    )
+    .catch(error => res.json(error))
+    
+  }
+  else{
+    res.json({error:"Not logged in"})
+  }
+})
+
 app.post('/register', (req,res) => {
     UserModel.create(req.body)
     .then(users => res.json(users))

@@ -1,1 +1,1 @@
-GET http://localhost:3001/api/comparts
+GET  http://localhost:3001/api/comparts
