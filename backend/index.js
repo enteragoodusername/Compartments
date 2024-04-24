@@ -8,9 +8,9 @@ require('dotenv').config();
 
 //RNpc0QYLZERzm5ePgBmnr92pHUGSN08D
 
-
 const uri = process.env.ConnectionString;
 const app = express()
+app.use(express.static('dist'))
 app.use(express.json())
 app.use(cors())
 app.use(session({
@@ -29,7 +29,7 @@ app.use((req,res,next)=>{
 })
 mongoose.connect(uri)
 
-app.post("/login", (req,res) => {
+app.post("/api/login", (req,res) => {
     const {email, password} = req.body;
     UserModel.findOne({email: email})
     .then(user => {
@@ -78,7 +78,7 @@ app.post("/api/comparts", (req,res) => {
   }
 })
 
-app.post('/register', (req,res) => {
+app.post('/api/register', (req,res) => {
     UserModel.create(req.body)
     .then(users => res.json(users))
     .catch(err => res.json(err))

@@ -1,1 +1,12 @@
-GET  http://localhost:3001/api/comparts
+POST http://localhost:3001/api/comparts
+Content-Type: application/json
+
+{
+    "comparts":[{
+      "name": "compFormText",
+      "color": "#${color}",
+      "tasks": []
+    }
+
+    ]
+}

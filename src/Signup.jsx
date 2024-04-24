@@ -13,7 +13,7 @@ function Signup() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post('http://localhost:3001/register', {name,email,password})
+        axios.post('http://localhost:3001/api/register', {name,email,password,comparts:[{name:"General", tasks:[]}]})
         .then(result => {console.log(result)
         navigate('/login')
         })
