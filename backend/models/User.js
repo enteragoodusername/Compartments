@@ -4,11 +4,15 @@ const UserSchema = new mongoose.Schema({
     name: String,
     email: String,
     password: String,
-    comparts: Array
+    comparts: [{name:String, tasks:Array}]
 })
 UserSchema.set('toJSON', {
     transform: (document, returnedObject) => {
       returnedObject.id = returnedObject._id.toString()
+      for (let index = 0; index < returnedObject.comparts.length; index++){
+        returnedObject.comparts[index].id = returnedObject.comparts[index]._id.toString()
+        delete returnedObject.comparts[index]._id
+      }
       delete returnedObject._id
       delete returnedObject.__v
     }
