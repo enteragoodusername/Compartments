@@ -10,7 +10,7 @@ require('dotenv').config();
 
 const uri = process.env.ConnectionString;
 const app = express()
-app.use(express.static('dist'))
+
 app.use(express.json())
 app.use(cors())
 app.use(session({

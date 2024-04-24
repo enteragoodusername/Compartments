@@ -16,7 +16,7 @@ function App() {
           {/* Use the "element" prop to specify the component to render for each route */}
           {/* The leading slash ("/") indicates an absolute path */}
           <Route path="/register" element={<Signup />} />
-          <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/Homepage" element={<Compartments />} />
           
           
