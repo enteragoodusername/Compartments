@@ -9,6 +9,14 @@ const uri = process.env.ConnectionString;
 const app = express()
 app.use(express.json())
 app.use(cors())
+app.use((req,res,next)=>{
+    UserModel.find({}).then(result => {
+        result.forEach(note => {
+          console.log(note)
+        })
+      })
+    next()
+})
 mongoose.connect(uri)
 
 app.post("/login", (req,res) => {
@@ -27,15 +35,6 @@ app.post("/login", (req,res) => {
     })
 })
 
-app.use((req,res,next)=>{
-    UserModel.find({}).then(result => {
-        result.forEach(note => {
-          console.log(note)
-        })
-        mongoose.connection.close()
-      })
-    next()
-})
 
 app.post('/register', (req,res) => {
     UserModel.create(req.body)
