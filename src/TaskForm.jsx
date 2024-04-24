@@ -1,16 +1,20 @@
-import React from "react";
+import React, { useState, useContext } from "react";
+import { MessageContext } from "./Homepage";
 
-const TaskForm = ({ comparts, setComparts}) => {
+const TaskForm = ({ compartments, setCompartments}) => {
+
+    console.log(compartments)
+
     const setMessage = useContext(MessageContext)
     
     const [newName, setFormName] = useState("");
     const [newDesc, setFormDesc] = useState("");
-    const [selectedCompart, setSelectedCompart] = useState(1)
+    const [selectedCompartmentID, setSelectedCompartmentID] = useState(1)
   
     const addTasks = (event) =>{
       event.preventDefault();
   
-      let compartIndex = comparts.findIndex((compart) =>compart.id == selectedCompart);
+      let compartmentIndex = compartments.findIndex((compartment) => compartment.id == selectedCompartment);
       console.log(selectedCompart);
       if (newName == ""){
           setMessage("Error: Tasks need to include a name");
@@ -19,20 +23,20 @@ const TaskForm = ({ comparts, setComparts}) => {
       let task = {
         name: newName,
         desc: newDesc,
-        id: comparts[compartIndex].tasks.length +1,
+        id: compartments[compartmentIndex].tasks.length + 1,
         finished: false,
-        compartID: comparts[compartIndex].id
+        compartID: compartments[compartIndex].id
       }
       
-      let newCompart = {
-        ...comparts[compartIndex],
-        tasks: comparts[compartIndex].tasks.concat(task)
+      let newCompartment = {
+        ...compartments[compartIndex],
+        tasks: compartments[compartIndex].tasks.concat(task)
       }
-      let newComparts = [...comparts];
-      newComparts[compartIndex] = newCompart;
+      let newCompartments = [...compartments];
+      newCompartments[compartIndex] = newCompartment;
       setFormName("");
       setFormDesc("");
-      setComparts(newComparts);
+      setCompartments(newcompartments);
       
     }
     return (
@@ -46,7 +50,7 @@ const TaskForm = ({ comparts, setComparts}) => {
         <br/>
         <label>Choose Compartment to insert into:</label>
         <select onChange={(selected) => setSelectedCompart(selected.target.value)}>
-          {comparts.map((compart) => <option key={Math.random() * 100000} value={compart.id}>{compart.name}</option>)}
+          {compartments.map((compartment) => <option key={Math.random() * 100000} value={compartment.id}>{compartment.name}</option>)}
         </select>
         <br/>
         <input type='submit' value="Add Task"/>

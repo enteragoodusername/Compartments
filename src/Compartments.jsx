@@ -5,7 +5,7 @@ import TaskForm from './TaskForm';
 import HeaderForm from './Header';
 
 /*
-export const MessageContext = createContext(() => { });
+
 
 const App = () => {
   const [comparts, setComparts] = useState([{ name: "General", tasks: [], id: 1 }]);
@@ -31,12 +31,3 @@ const App = () => {
 
 export default App
 */
-
-const Compartment = () => {
-  return (
-    <>
-    </>
-  );
-}
-
-export default Compartment;
