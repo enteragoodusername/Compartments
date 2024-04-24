@@ -4,7 +4,7 @@ const UserSchema = new mongoose.Schema({
     name: String,
     email: String,
     password: String,
-    comparts: [{name:String, tasks:Array}]
+    comparts: [{name:String, tasks:Array, color:String}]
 })
 UserSchema.set('toJSON', {
     transform: (document, returnedObject) => {
