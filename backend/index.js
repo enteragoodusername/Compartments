@@ -2,13 +2,23 @@ const express = require("express")
 const mongoose = require("mongoose")
 const cors = require("cors")
 const UserModel = require('./models/User')
+const session = require('express-session');
+
 require('dotenv').config();
+
+//RNpc0QYLZERzm5ePgBmnr92pHUGSN08D
 
 
 const uri = process.env.ConnectionString;
 const app = express()
 app.use(express.json())
 app.use(cors())
+app.use(session({
+  secret: 'RNpc0QYLZERzm5ePgBmnr92pHUGSN08D', // Replace with your secret key
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false } // Set to `true` if you are using HTTPS
+}));
 app.use((req,res,next)=>{
     UserModel.find({}).then(result => {
         result.forEach(note => {
@@ -25,7 +35,11 @@ app.post("/login", (req,res) => {
     .then(user => {
         if(user){
             if(user.password === password){
+                
+                req.session.userID = user._id.toString()
+                console.log(req.session.userID)
                 res.json("Success")
+                
             } else{
                 res.json("the password is incorrect")
             }
@@ -35,6 +49,18 @@ app.post("/login", (req,res) => {
     })
 })
 
+app.get("/api/comparts", (req,res) => {
+  
+  if (req.session.userID){
+    UserModel.findById(req.session.userID)
+    .then(result => res.json(result.comparts))
+    .catch(error => res.json(error))
+    
+  }
+  else{
+    res.json({error:"Not logged in"})
+  }
+})
 
 app.post('/register', (req,res) => {
     UserModel.create(req.body)
