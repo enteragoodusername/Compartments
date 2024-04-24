@@ -191,7 +191,6 @@ const App  = () => {
   const [comparts, setComparts] = useState([{name: "General", tasks:[], id:1}]);
   const [message, setMessage] = useState("")
 
-
   let i =0;
 
   return (<>
