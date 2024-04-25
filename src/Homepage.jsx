@@ -4,6 +4,7 @@ import HeaderForm from "./Header";
 import TaskForm from "./TaskForm";
 import CompartmentForm from "./CompartmentForm";
 import Compartment from "./Compartment";
+import { DataTable } from "primereact/datatable"
 
 export const MessageContext = createContext('');
 
@@ -39,6 +40,14 @@ function Homepage() {
                                 <HeaderForm />
                                 <TaskForm compartments={compartments} setCompartments={setCompartment}/>
                             </div>
+                        </div>
+                        <div>
+                            {compartments.map((compartment) => 
+                                <Compartment compartments={compartment} key={++i} compartment={compartment} setCompartment={setCompartment}/>
+                            )}
+                        </div>
+                        <div>
+                            <CompartmentForm compartmentsFormText={compartmentsFormText} setCompText={setCompartmentsFormText} compartments={compartments} setComparts={setCompartment}/>
                         </div>
                     </div>
                 </div>

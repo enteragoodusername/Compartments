@@ -1,4 +1,7 @@
 import React from "react";
+import { useContext, useState } from "react";
+import { MessageContext } from "./Homepage";
+import { ColorPicker } from "primereact/colorpicker";
 
 const CompartmentForm = ({comparts, setComparts}) =>{
     const setMessage = useContext(MessageContext)

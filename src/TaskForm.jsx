@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import { MessageContext } from "./Homepage";
+import { ColorPicker } from "primereact/colorpicker" 
 
 const TaskForm = ({ compartments, setCompartments}) => {
 
@@ -50,7 +51,9 @@ const TaskForm = ({ compartments, setCompartments}) => {
         <br/>
         <label>Choose Compartment to insert into:</label>
         <select onChange={(selected) => setSelectedCompart(selected.target.value)}>
-          {compartments.map((compartment) => <option key={Math.random() * 100000} value={compartment.id}>{compartment.name}</option>)}
+          {compartments.map((compartment) => 
+            <option key={Math.random() * 100000} value={compartment.id}>{compartment.name}</option>
+            )}
         </select>
         <br/>
         <input type='submit' value="Add Task"/>
