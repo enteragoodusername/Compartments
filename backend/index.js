@@ -10,15 +10,17 @@ require('dotenv').config();
 
 const uri = process.env.ConnectionString;
 const app = express()
-
+app.enable('trust proxy')
 app.use(express.json())
-app.use(cors())
+app.use(cors({origin: "https://compartments.fly.dev",credentials: true}))
 app.use(session({
   secret: 'RNpc0QYLZERzm5ePgBmnr92pHUGSN08D', // Replace with your secret key
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false } // Set to `true` if you are using HTTPS
+  name: "name for testing",
+  cookie: { sameSite:'none',secure: true } // Set to `true` if you are using HTTPS
 }));
+
 app.use((req,res,next)=>{
     UserModel.find({}).then(result => {
         result.forEach(note => {
@@ -37,7 +39,7 @@ app.post("/api/login", (req,res) => {
             if(user.password === password){
                 
                 req.session.userID = user._id.toString()
-                console.log(req.session.userID)
+                console.log("User ID"+req.session.userID)
                 res.json("Success")
                 
             } else{
@@ -50,7 +52,7 @@ app.post("/api/login", (req,res) => {
 })
 
 app.get("/api/comparts", (req,res) => {
-  
+  console.log("User ID"+req.session.userID)
   if (req.session.userID){
     UserModel.findById(req.session.userID)
     .then(result => res.json(result.comparts))
@@ -79,11 +81,12 @@ app.post("/api/comparts", (req,res) => {
 })
 
 app.post('/api/register', (req,res) => {
+    
     UserModel.create(req.body)
     .then(users => res.json(users))
     .catch(err => res.json(err))
 })
-
-app.listen(3001, () => {
-    console.log("server running!")
+const PORT = process.env.PORT || 3001
+app.listen(PORT, () => {
+    console.log(`server running on ${PORT}`)
 })

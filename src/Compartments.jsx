@@ -96,7 +96,7 @@ const CompartmentForm = ({comparts, setComparts}) =>{
     }
     let sendVal = {comparts: comparts.concat(compart)} 
     console.log(sendVal)
-    axios.post("/api/comparts",sendVal).then((response) => {
+    axios.post("https://compartments-backend.fly.dev/api/comparts",sendVal).then((response) => {
       console.log(response)
       setComparts(response.data);
       setCompText("");
@@ -158,7 +158,7 @@ const TaskForm = ({ comparts, setComparts}) => {
     setFormName("");
     setFormDesc("");
     const sendVal = {comparts: newComparts}
-    axios.post("/api/comparts",sendVal).then((response) => {
+    axios.post("https://compartments-backend.fly.dev/api/comparts",sendVal).then((response) => {
     console.log(response)
      setComparts(response.data);
      setCompText("");
@@ -189,7 +189,7 @@ const TaskForm = ({ comparts, setComparts}) => {
 const Compartments  = () => {
   const [comparts, setComparts] = useState([]);
   const [message, setMessage] = useState("")
-  useEffect(()=>{axios.get("/api/comparts").then(result => {
+  useEffect(()=>{axios.get("https://compartments-backend.fly.dev/api/comparts").then(result => {
     console.log(result)
     setComparts(result.data)
   })},[])

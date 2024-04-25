@@ -1,12 +1,7 @@
-POST http://localhost:3001/api/comparts
+POST https://compartments-backend.fly.dev/api/login
 Content-Type: application/json
 
 {
-    "comparts":[{
-      "name": "compFormText",
-      "color": "#${color}",
-      "tasks": []
-    }
-
-    ]
+    "email": "wow@me.com",
+    "password": "test"
 }

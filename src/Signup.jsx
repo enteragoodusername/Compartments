@@ -14,7 +14,7 @@ function Signup() {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.post('/api/register', {name,email,password})
+        axios.post('https://compartments-backend.fly.dev/api/register', {name,email,password, comparts:[{name: "General",tasks:[],color:"#fff"}]})
         .then(result => {console.log(result)
         navigate('/login')
         })
