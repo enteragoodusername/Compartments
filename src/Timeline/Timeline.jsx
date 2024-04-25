@@ -2,14 +2,14 @@ import {useState} from 'react'
 import "./Timeline.css"
 
 const SelectionChoice = ({compart, selCompart, changeSelCompart}) =>{
-    let isClicked = compart.id == selCompart
+    let isClicked = compart._id === selCompart
     let shadowStyle = isClicked ? "rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset" : ""
     const onClick = () =>{
         if (isClicked){
             changeSelCompart(null)
         }
         else{
-            changeSelCompart(compart.id)
+            changeSelCompart(compart._id)
         }
         
     }
@@ -26,7 +26,7 @@ const CompartSelector = ({comparts, selCompart, changeSelCompart}) =>{
 }
 const QuarterBox = ({comparts,selCompart}) => {
     const [compartID, setCompartID] = useState(null)
-    const foundVal= comparts.find((compart) => compart.id == compartID)
+    const foundVal= comparts.find((compart) => compart._id == compartID)
     const backgroundColor = foundVal ? foundVal.color : ""
     const onClick = () => {
         if (selCompart == compartID){

@@ -1,9 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Signup from './Signup';
 import Login from './Login';
 import Compartments from './Compartments';
-
+import LandingPage from './landing/LandingPage';
 
 
 function App() {
@@ -15,8 +14,9 @@ function App() {
         <Routes>
           {/* Use the "element" prop to specify the component to render for each route */}
           {/* The leading slash ("/") indicates an absolute path */}
+          <Route path="" element={<LandingPage />} />
           <Route path="/register" element={<Signup />} />
-          <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/Homepage" element={<Compartments />} />
           
           

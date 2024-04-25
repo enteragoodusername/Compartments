@@ -21,5 +21,8 @@
   "runArgs": [
     "--env-file",
     ".devcontainer.env"
-  ]
+  ],
+  "devDependencies": {
+    "@flydotio/dockerfile": "^0.5.6"
+  }
 }
